@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Clock, X, Eye, Calendar, Search, User, MapPin, Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Check, Clock, X, Eye, Calendar, Search, User, MapPin, Phone, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -34,6 +35,8 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import Layout from "@/components/layout/Layout";
 import { format } from "date-fns";
 
@@ -108,6 +111,9 @@ const Admin: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const [viewBooking, setViewBooking] = useState<any | null>(null);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
+  const { toast } = useToast();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   // Handle search and filtering
   const handleSearch = (query: string) => {
@@ -148,12 +154,26 @@ const Admin: React.FC = () => {
     );
     setBookings(updatedBookings);
     filterBookings(searchQuery, statusFilter);
+    
+    toast({
+      title: "Status updated",
+      description: `Booking #${id} has been marked as ${newStatus}.`,
+    });
   };
 
   // Handle view booking details
   const handleViewBooking = (booking: any) => {
     setViewBooking(booking);
     setIsViewDialogOpen(true);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
   };
 
   // Get status badge
@@ -203,6 +223,15 @@ const Admin: React.FC = () => {
                 Manage your photography booking requests
               </p>
             </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleLogout}
+              className="mt-4 md:mt-0"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
           </div>
 
           <Tabs defaultValue="bookings" className="w-full">
@@ -327,8 +356,8 @@ const Admin: React.FC = () => {
                             ))
                           ) : (
                             <tr>
-                              <td colSpan={5} className="p-8 text-center text-muted-foreground">
-                                No bookings found matching your filters.
+                              <td colSpan={5} className="p-4 text-center text-muted-foreground">
+                                No bookings found matching your criteria.
                               </td>
                             </tr>
                           )}
@@ -344,17 +373,17 @@ const Admin: React.FC = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Calendar View</CardTitle>
-                  <CardDescription>View and manage your upcoming photography sessions</CardDescription>
+                  <CardDescription>
+                    Manage your bookings in a calendar view. (This feature would be implemented in a production environment)
+                  </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-center h-80">
-                    <div className="text-center text-muted-foreground">
-                      <Calendar className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-                      <h3 className="text-lg font-medium">Calendar View Coming Soon</h3>
-                      <p className="max-w-md">
-                        We're working on a full calendar integration to help you manage your photography sessions more efficiently.
-                      </p>
-                    </div>
+                <CardContent className="h-[400px] flex items-center justify-center">
+                  <div className="text-center text-muted-foreground">
+                    <Calendar className="h-16 w-16 mx-auto mb-4 text-primary/50" />
+                    <h3 className="text-lg font-medium">Calendar View Coming Soon</h3>
+                    <p className="max-w-md mx-auto mt-2">
+                      The calendar view will allow you to see all your bookings in a monthly, weekly, or daily format.
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -364,17 +393,17 @@ const Admin: React.FC = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Client Management</CardTitle>
-                  <CardDescription>View and manage your client database</CardDescription>
+                  <CardDescription>
+                    Manage your client database. (This feature would be implemented in a production environment)
+                  </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-center h-80">
-                    <div className="text-center text-muted-foreground">
-                      <User className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-                      <h3 className="text-lg font-medium">Client Database Coming Soon</h3>
-                      <p className="max-w-md">
-                        We're building a comprehensive client management system to help you keep track of your clients and their preferences.
-                      </p>
-                    </div>
+                <CardContent className="h-[400px] flex items-center justify-center">
+                  <div className="text-center text-muted-foreground">
+                    <User className="h-16 w-16 mx-auto mb-4 text-primary/50" />
+                    <h3 className="text-lg font-medium">Client Database Coming Soon</h3>
+                    <p className="max-w-md mx-auto mt-2">
+                      The client management system will allow you to track client information, communication history, and booking preferences.
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -383,136 +412,96 @@ const Admin: React.FC = () => {
             <TabsContent value="settings">
               <Card>
                 <CardHeader>
-                  <CardTitle>Account Settings</CardTitle>
-                  <CardDescription>Manage your account preferences</CardDescription>
+                  <CardTitle>Settings</CardTitle>
+                  <CardDescription>
+                    Manage your account and application settings.
+                  </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-center h-80">
-                    <div className="text-center text-muted-foreground">
-                      <p>Settings page under development</p>
-                    </div>
+                <CardContent className="h-[400px] flex items-center justify-center">
+                  <div className="text-center text-muted-foreground">
+                    <h3 className="text-lg font-medium">Settings Coming Soon</h3>
+                    <p className="max-w-md mx-auto mt-2">
+                      This section will include options to customize your account, notification preferences, and application settings.
+                    </p>
+                    <Button 
+                      variant="destructive" 
+                      className="mt-8" 
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
             </TabsContent>
           </Tabs>
-
-          {/* Booking Details Dialog */}
-          <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
-            {viewBooking && (
-              <DialogContent className="sm:max-w-lg">
-                <DialogHeader>
-                  <DialogTitle>Booking Details</DialogTitle>
-                  <DialogDescription>
-                    Complete information about the booking request
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="text-lg font-medium">{viewBooking.name}</h3>
-                      <p className="text-muted-foreground text-sm">{viewBooking.email}</p>
-                    </div>
-                    {getStatusBadge(viewBooking.status)}
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-4 mt-4">
-                    <div className="flex items-start space-x-3">
-                      <Calendar className="h-5 w-5 text-muted-foreground mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium">Event Date</p>
-                        <p className="text-sm text-muted-foreground">
-                          {format(viewBooking.date, "MMMM dd, yyyy")}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-3">
-                      <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium">Location</p>
-                        <p className="text-sm text-muted-foreground">
-                          {viewBooking.location}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-3">
-                      <Phone className="h-5 w-5 text-muted-foreground mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium">Contact</p>
-                        <p className="text-sm text-muted-foreground">
-                          {viewBooking.phone}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {viewBooking.notes && (
-                    <div className="mt-4">
-                      <p className="text-sm font-medium">Notes</p>
-                      <p className="text-sm text-muted-foreground mt-1 p-3 bg-muted/50 rounded-md">
-                        {viewBooking.notes}
-                      </p>
-                    </div>
-                  )}
-                </div>
-                <div className="mt-6 flex justify-between">
-                  <Button
-                    variant="outline"
-                    onClick={() => setIsViewDialogOpen(false)}
-                  >
-                    Close
-                  </Button>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline">Update Status</Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() => {
-                          updateBookingStatus(viewBooking.id, "pending");
-                          setViewBooking({...viewBooking, status: "pending"});
-                        }}
-                      >
-                        <Clock className="h-4 w-4 mr-2" />
-                        Mark as Pending
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => {
-                          updateBookingStatus(viewBooking.id, "confirmed");
-                          setViewBooking({...viewBooking, status: "confirmed"});
-                        }}
-                      >
-                        <Check className="h-4 w-4 mr-2" />
-                        Mark as Confirmed
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => {
-                          updateBookingStatus(viewBooking.id, "completed");
-                          setViewBooking({...viewBooking, status: "completed"});
-                        }}
-                      >
-                        <Check className="h-4 w-4 mr-2" />
-                        Mark as Completed
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => {
-                          updateBookingStatus(viewBooking.id, "cancelled");
-                          setViewBooking({...viewBooking, status: "cancelled"});
-                        }}
-                      >
-                        <X className="h-4 w-4 mr-2" />
-                        Mark as Cancelled
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </DialogContent>
-            )}
-          </Dialog>
         </div>
       </section>
+      
+      {/* View Booking Dialog */}
+      <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Booking Details</DialogTitle>
+            <DialogDescription>
+              View detailed information about this booking.
+            </DialogDescription>
+          </DialogHeader>
+          {viewBooking && (
+            <div className="space-y-4 py-4">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-medium">{viewBooking.name}</h3>
+                  <p className="text-sm text-muted-foreground">{viewBooking.email}</p>
+                </div>
+                {getStatusBadge(viewBooking.status)}
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-start gap-2">
+                  <Calendar className="h-4 w-4 mt-0.5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Event Date</p>
+                    <p className="text-sm text-muted-foreground">
+                      {format(viewBooking.date, "MMMM dd, yyyy")}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Location</p>
+                    <p className="text-sm text-muted-foreground">{viewBooking.location}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-2">
+                  <Phone className="h-4 w-4 mt-0.5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Contact</p>
+                    <p className="text-sm text-muted-foreground">{viewBooking.phone}</p>
+                  </div>
+                </div>
+              </div>
+              
+              {viewBooking.notes && (
+                <div className="border-t pt-4 mt-4">
+                  <p className="text-sm font-medium">Notes</p>
+                  <p className="text-sm text-muted-foreground mt-1">{viewBooking.notes}</p>
+                </div>
+              )}
+              
+              <div className="border-t pt-4 mt-4">
+                <p className="text-xs text-muted-foreground">
+                  Created on {format(viewBooking.createdAt, "MMMM dd, yyyy")}
+                </p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
