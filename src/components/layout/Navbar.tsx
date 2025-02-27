@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Camera } from "lucide-react";
+import { Camera, Menu, X } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,7 +24,8 @@ const Navbar: React.FC = () => {
     { name: "Services", path: "/services" },
     { name: "Gallery", path: "/gallery" },
     { name: "Book Now", path: "/book" },
-    { name: "Contact", path: "/contact" }
+    { name: "Contact", path: "/contact" },
+    { name: "Admin", path: "/admin" }
   ];
 
   return (

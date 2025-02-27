@@ -67,6 +67,7 @@ const eventTypes = [
   { value: "family", label: "Family Photography" },
   { value: "corporate", label: "Corporate Event" },
   { value: "product", label: "Product Photography" },
+  { value: "birthday", label: "Birthday Party" },
   { value: "other", label: "Other" },
 ];
 
@@ -101,7 +102,7 @@ const Book: React.FC = () => {
     setFormattedRequest(request);
 
     try {
-      // Here you would normally send the data to your API
+      // In a production environment, this is where you would send data to your API
       // For now, we'll simulate an API call with a timeout
       await new Promise((resolve) => setTimeout(resolve, 1500));
       
@@ -325,7 +326,7 @@ const Book: React.FC = () => {
                       Edit Request
                     </Button>
                     <Button asChild>
-                      <a href="/">Return Home</a>
+                      <Link to="/">Return Home</Link>
                     </Button>
                   </div>
                 </div>
