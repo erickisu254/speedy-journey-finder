@@ -1,69 +1,67 @@
-# Welcome to your Lovable project
+# Speedy Journey Finder 🚀
 
-## Project info
+**Speedy Journey Finder** is a web application designed to help users find the fastest and most efficient travel routes. Built using TypeScript, Tailwind CSS, and Vite, it delivers high performance and a clean UI for optimal usability.
 
-**URL**: https://lovable.dev/projects/423bcc5d-2e92-49c6-8c78-7c7bc8421b6b
+## ✨ Features
 
-## How can I edit this code?
+- 🔍 Real-time journey and route suggestions
+- 🗺️ Clean and responsive user interface
+- ⚡ Fast build with Vite
+- 💅 Tailwind CSS for sleek styling
+- ⚙️ TypeScript for type safety and maintainability
 
-There are several ways of editing your application.
+## 📸 Screenshots
 
-**Use Lovable**
+<!-- Add screenshots when available -->
+<!-- ![Home Page](./assets/screenshots/home.png) -->
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/423bcc5d-2e92-49c6-8c78-7c7bc8421b6b) and start prompting.
+## 🧰 Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+| Frontend  | Tool        |
+|-----------|-------------|
+| Language  | TypeScript  |
+| Framework | Vite        |
+| Styling   | Tailwind CSS |
+| Hosting   | Lovable.dev |
 
-**Use your preferred IDE**
+## 🛠 Installation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+To run the project locally:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+# Clone the repository
+git clone https://github.com/erickisu254/speedy-journey-finder.git
+cd speedy-journey-finder
 
-Follow these steps:
+# Install dependencies
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
-```
+📁 Project Structure
+arduino
+Copy
+Edit
+.
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── App.tsx
+│   └── main.tsx
+├── public/
+├── index.html
+└── vite.config.ts
+📌 Future Enhancements
+🚗 Integration with real-time traffic or map APIs
 
-**Edit a file directly in GitHub**
+📍 Geolocation support
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+🧭 User journey history
 
-**Use GitHub Codespaces**
+🌍 Multi-language support
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+🤝 Contributing
+Contributions are welcome! Feel free to open issues, submit pull requests, or suggest new features.
 
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/423bcc5d-2e92-49c6-8c78-7c7bc8421b6b) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+📜 License
+This project is open source and available under the MIT License.
